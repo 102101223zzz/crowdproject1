@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.kknb.crowdproject.mapper.userMapper">
+    <!--根据id查询,返回一个项目-->
+    <select id="selectUser" resultType="com.kknb.crowdproject.pojo.User">
+        select * from crowdfunding_platform.user
+        where userID= #{userID}
+    </select>
+
+    <insert id="addUser" parameterType="com.kknb.crowdproject.pojo.User">
+        insert into crowdfunding_platform.user (userID,userName,userPassword,contactInformation,userRight,projectNum)
+        values (#{userID},#{userName},#{userPassword},#{contactInformation},#{userRight},#{projectNum});
+    </insert>
+    <select id="selectAllUser" resultType="com.kknb.crowdproject.pojo.User">
+        SELECT * from crowdfunding_platform.user
+    </select>
+    <select id="telephoneNum" resultType="com.kknb.crowdproject.pojo.User">
+        SELECT contactInformation from crowdfunding_platform.user
+        where userID =#{userID};
+    </select>
+</mapper>

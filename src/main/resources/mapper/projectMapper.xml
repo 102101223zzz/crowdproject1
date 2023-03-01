@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.kknb.crowdproject.mapper.projectMapper">
+
+    <!--提出众筹者-->
+    <!--增加一个项目-->
+    <insert id="addProject" parameterType="com.kknb.crowdproject.pojo.Project">
+        insert into crowdfunding_platform.project(projectName,projectID,creatorID,creatorName,submissionTime,projectMaterials,remarks,purpose,nowmoney,isAudit,targetmoney,region,address)
+     values (#{projectName},#{projectID},#{creatorID},#{creatorName},#{submissionTime},#{projectMaterials},#{remarks},#{purpose},#{nowmoney},#{isAudit},#{targetmoney},#{region},#{address});
+    </insert>
+    <!--查找自己的项目-->
+    <select id="selectselfsProjectByID" resultType="com.kknb.crowdproject.pojo.Project">
+        SELECT * from crowdfunding_platform.project where creatorID = #{userID}
+    </select>
+    <!--查询筹资情况-->
+    <select id="selectMoney" resultType="int">
+        SELECT nowmoney from crowdfunding_platform.project where projectID = #{projectID}
+    </select>
+    <!--管理员-->
+    <!--根据id删除一个项目-->
+    <delete id="deleteProjectByID" parameterType="int">
+        delete from crowdfunding_platform.project where projectID=#{projectID}
+    </delete>
+    <!--查找所有未审核的项目-->
+    <select id="selectAllNotPassProject" resultType="com.kknb.crowdproject.pojo.Project">
+    SELECT * from crowdfunding_platform.project where isAudit=false
+    </select>
+    <!--一般用户-->
+    <!--根据id查询,返回一个项目-->
+    <select id="selectOneProjectByID" resultType="com.kknb.crowdproject.pojo.Project">
+        select * from crowdfunding_platform.project
+        where projectID = #{projectID} and isAudit=true
+    </select>
+    <!--查询全部项目-->
+    <select id="selectAllProject" resultType="com.kknb.crowdproject.pojo.Project">
+        SELECT * from crowdfunding_platform.project where isAudit=true
+    </select>
+<!--     查询一个没有通过的项目-->
+    <select id="selectOneNotPassProjectByID" resultType="com.kknb.crowdproject.pojo.Project">
+        select * from crowdfunding_platform.project
+        where projectID = #{projectID} and isAudit=false;
+    </select>
+<!--    更新当前资金-->
+    <update id="updateNowMoney" parameterType="int">
+        update crowdfunding_platform.project
+        set nowmoney = #{money}
+        where projectID = #{projectID}
+    </update>
+<!--    更新当前审核状态-->
+    <update id="updateAudit" parameterType="int">
+        update crowdfunding_platform.project
+        set isAudit = #{isAudit}
+        where projectID = #{projectID}
+    </update>
+</mapper>
