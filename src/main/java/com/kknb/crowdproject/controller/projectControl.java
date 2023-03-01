@@ -37,33 +37,31 @@ public class projectControl {
    private userService userService;
     @RequestMapping(path = "/add", method = RequestMethod.POST)
     public Map<String,Object> addProject(@RequestParam(value = "file",required = false) MultipartFile file,Project project) throws IOException {
-System.out.println(project);
-        BASE64Encoder encoder=new BASE64Encoder();
+        System.out.println(project);
+        BASE64Encoder encoder = new BASE64Encoder();
         System.out.println(file.isEmpty());
-        Map<String,Object> map=new HashMap<>();
-        if(file.isEmpty())
-        {
+        Map<String, Object> map = new HashMap<>();
+        if (file.isEmpty()) {
             System.out.println("seq"
             );
         }
-        String image1="";
-        if(!file.isEmpty())
-        {
-            image1=encoder.encode(file.getBytes());
+        String image1 = "";
+        if (!file.isEmpty()) {
+            image1 = encoder.encode(file.getBytes());
         }
-        User user=userService.selectUser(project.getCreatorID());
+        User user = userService.selectUser(project.getCreatorID());
         System.out.println(user);
-        if(projectService.selectOneProjectByID(project.getProjectID())!=null&&projectService.selectOneProjectByID(project.getProjectID()).getProjectID().equals(project.getProjectID()))
-        {
-          map.put("msg","该项目已存在");
-          return map;
+        if (projectService.selectOneProjectByID(project.getProjectID()) != null && projectService.selectOneProjectByID(project.getProjectID()).getProjectID().equals(project.getProjectID())) {
+            map.put("msg", "该项目已存在");
+            return map;
+        } else {
+            project.setProjectID(project.getProjectID() + user.getProjectNum());
+            userService.updateProjectNum(user.getProjectNum() + 1, user.getUserID());
+            project.setProjectMaterials(image1);
+            projectService.addProject(project);
+            map.put("msg", "添加项目成功，等待审核");
+            return map;
         }
-        project.setProjectID(project.getProjectID()+1);
-        user.setProjectNum(user.getProjectNum()+1);
-        project.setProjectMaterials(image1);
-        projectService.addProject(project);
-        map.put("msg","添加项目成功，等待审核");
-        return map;
     }
     //查询审核状态
     @RequestMapping("/selectselfsProjectByID")

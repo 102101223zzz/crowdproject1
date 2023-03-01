@@ -14,5 +14,6 @@ public interface userMapper{
        public User selectUser(int userID);
        public List<User> selectAllUser();
        int telephoneNum(int userID);
+       int projectNum(int projectNum,int userID);
 
 }

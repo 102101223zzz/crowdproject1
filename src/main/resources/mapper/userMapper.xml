@@ -21,4 +21,9 @@
         SELECT contactInformation from crowdfunding_platform.user
         where userID =#{userID};
     </select>
+    <update id="projectNum" parameterType="int">
+        update crowdfunding_platform.user
+        set projectNum = #{projectNum}
+        where userID = #{userID}
+    </update>
 </mapper>

@@ -42,6 +42,10 @@ public class userServiceimpl implements userService{
         return userMapper.selectAllUser();
     }
 
+  public int updateProjectNum(int projectNum,int userID)
+  {
+      return userMapper.projectNum(projectNum,userID);
+  }
 
 
 }
