@@ -52,8 +52,11 @@ System.out.println(project);
             image1=encoder.encode(file.getBytes());
         }
         User user=userService.selectUser(project.getCreatorID());
-        if(projectService.selectOneProjectByID(project.getProjectID()).getProjectID()==project.getProjectID())
+        System.out.println(user);
+        if(projectService.selectOneProjectByID(project.getProjectID())!=null&&projectService.selectOneProjectByID(project.getProjectID()).getProjectID().equals(project.getProjectID()))
         {
+          map.put("msg","该项目已存在");
+          return map;
         }
         project.setProjectID(project.getProjectID()+1);
         user.setProjectNum(user.getProjectNum()+1);
