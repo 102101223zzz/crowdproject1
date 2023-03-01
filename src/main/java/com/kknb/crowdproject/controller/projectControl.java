@@ -25,6 +25,7 @@ import java.util.List;
 import java.util.Map;
 
 @RestController
+@CrossOrigin(originPatterns = "*", methods = {RequestMethod.GET, RequestMethod.POST})
 @RequestMapping("/project")
 public class projectControl {
     @Autowired
@@ -55,7 +56,7 @@ public class projectControl {
             map.put("msg", "该项目已存在");
             return map;
         } else {
-            project.setProjectID(project.getProjectID() + user.getProjectNum());
+            project.setProjectID(null);
             userService.updateProjectNum(user.getProjectNum() + 1, user.getUserID());
             project.setProjectMaterials(image1);
             projectService.addProject(project);

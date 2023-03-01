@@ -30,13 +30,10 @@ public class projectServiceimpl implements projectService{
     @Override
     public  boolean addProject(Project project)
     {
-      if(projectMapper.selectOneProjectByID(project.getProjectID())==null)
-      {
+
           //说明该id不存在可以增加
           projectMapper.addProject(project);
           return true;
-      }
-      return false;
     }
   //查找自己项目的审核状态
     public List<Project> selectselfsProjectByID(int userId)

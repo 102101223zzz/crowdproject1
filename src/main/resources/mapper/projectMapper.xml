@@ -32,7 +32,7 @@
     <!--根据id查询,返回一个项目-->
     <select id="selectOneProjectByID" resultType="com.kknb.crowdproject.pojo.Project">
         select * from crowdfunding_platform.project
-        where projectID = #{projectID} and isAudit=true
+        where projectID = #{projectID}
     </select>
     <!--查询全部项目-->
     <select id="selectAllProject" resultType="com.kknb.crowdproject.pojo.Project">
